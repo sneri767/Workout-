@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Young Athlete Power Workout ⚾🏒</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{background:#0a0a1a;color:white;font-family:'Bebas Neue','Arial Black',sans-serif;min-height:100vh;overflow-x:hidden}
+@keyframes blob{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(30px,20px) scale(1.1)}}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+@keyframes ticker{0%{opacity:0;transform:translateY(-10px)}20%{opacity:1;transform:translateY(0)}80%{opacity:1;transform:translateY(0)}100%{opacity:0;transform:translateY(10px)}}
+@keyframes glow{0%,100%{opacity:0.6}50%{opacity:1}}
+@keyframes star{0%,100%{opacity:0.3;transform:scale(0.8)}50%{opacity:1;transform:scale(1.2)}}
+@keyframes flash{0%{opacity:0.45}100%{opacity:0}}
+@keyframes spin{to{transform:rotate(360deg)}}
+.screen{display:none;min-height:100vh}
+.screen.active{display:flex;flex-direction:column}
+.blob{position:fixed;border-radius:50%;pointer-events:none;z-index:0}
+.btn{cursor:pointer;border:none;font-family:'Bebas Neue',sans-serif;transition:transform 0.15s}
+.btn:hover{transform:scale(1.05)}
+.btn:active{transform:scale(0.95)}
+#musicViz{display:flex;gap:3px;align-items:flex-end;height:26px;justify-content:center;margin:3px 0}
+.bar{width:5px;border-radius:3px;background:#FFD700;height:2px}
+#flashOverlay{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:999;opacity:0}
+.ctrl-btn{background:#ffffff15;border:1px solid #ffffff33;border-radius:20px;padding:3px 10px;color:white;font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;cursor:pointer;letter-spacing:1px;transition:background 0.2s}
+.ctrl-btn.off{background:#ff222215;border-color:#ff444433;color:#ff6666}
+.speaking-indicator{display:none;align-items:center;gap:6px;font-family:'Barlow Condensed',sans-serif;font-size:13px;color:#FFD700;letter-spacing:1px}
+.speaking-dot{width:8px;height:8px;border-radius:50%;background:#FFD700;animation:pulse 0.6s ease-in-out infinite}
+</style>
+</head>
+<body>
+<div id="flashOverlay"></div>
+<div id="intro" class="screen active" style="align-items:center;justify-content:center;text-align:center;padding:28px 22px;position:relative;overflow:hidden;background:linear-gradient(160deg,#1a0533,#0a0a1a 50%,#0d1f3c)">
+  <div class="blob" style="width:260px;height:260px;background:radial-gradient(circle,#FF6B3533,transparent 70%);top:3%;left:3%;animation:glow 3s ease-in-out infinite"></div>
+  <div class="blob" style="width:220px;height:220px;background:radial-gradient(circle,#2196F333,transparent 70%);top:58%;left:68%;animation:glow 4s ease-in-out infinite"></div>
+  <div class="blob" style="width:200px;height:200px;background:radial-gradient(circle,#E6394633,transparent 70%);top:28%;left:43%;animation:glow 5s ease-in-out infinite"></div>
+  <div class="blob" style="width:180px;height:180px;background:radial-gradient(circle,#7C4DFF33,transparent 70%);top:73%;left:12%;animation:glow 3.5s ease-in-out infinite"></div>
+  <div style="position:relative;z-index:5;animation:fadeUp 0.7s ease">
+    <div style="font-size:84px;animation:float 3s ease-in-out infinite">⚾🏒</div>
+    <h1 style="font-size:clamp(40px,11vw,82px);letter-spacing:4px;line-height:0.95;margin:0 0 8px;text-shadow:0 0 40px #FF6B3588">YOUNG ATHLETE<br><span style="color:#FFD700;text-shadow:0 0 30px #FFD70088">POWER WORKOUT</span></h1>
+    <div style="font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:700;letter-spacing:4px;color:#ffffffaa;margin-bottom:16px">35-MINUTE ATHLETE TRAINING · BASEBALL &amp; HOCKEY</div>
+    <div style="display:flex;flex-wrap:wrap;gap:7px;justify-content:center;margin-bottom:18px">
+      <span style="background:#FF6B3522;border:1.5px solid #FF6B3555;border-radius:20px;padding:5px 12px;font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;color:#FF6B35">🔥 Warm Up</span>
+      <span style="background:#E6394622;border:1.5px solid #E6394655;border-radius:20px;padding:5px 12px;font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;color:#E63946">🦵 Power &amp; Legs</span>
+      <span style="background:#2196F322;border:1.5px solid #2196F355;border-radius:20px;padding:5px 12px;font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;color:#2196F3">💪 Core &amp; Upper</span>
+      <span style="background:#7C4DFF22;border:1.5px solid #7C4DFF55;border-radius:20px;padding:5px 12px;font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;color:#7C4DFF">⚡ Speed &amp; Agility</span>
+      <span style="background:#00BFA522;border:1.5px solid #00BFA555;border-radius:20px;padding:5px 12px;font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;color:#00BFA5">🧘 Cool Down</span>
+    </div>
+    <div style="background:#ffffff0d;border:1px solid #ffffff15;border-radius:14px;padding:13px 20px;font-family:'Barlow Condensed',sans-serif;font-size:16px;line-height:1.5;max-width:370px;margin:0 auto 16px;color:#ffffffcc">🎙️ <em>"Alright athlete — let's get stronger, faster, and more explosive today. Good form, big effort, have fun."</em></div>
+    <div style="display:flex;gap:10px;justify-content:center;margin-bottom:18px;flex-wrap:wrap">
+      <div style="background:#FF6B3518;border:1.5px solid #FF6B3544;border-radius:10px;padding:8px 16px;font-family:'Barlow Condensed',sans-serif;font-size:14px;color:#FF6B35;letter-spacing:1px">🎸 Real punk rock music</div>
+      <div style="background:#FFD70018;border:1.5px solid #FFD70044;border-radius:10px;padding:8px 16px;font-family:'Barlow Condensed',sans-serif;font-size:14px;color:#FFD700;letter-spacing:1px">🎙️ AI voice coaching</div>
+      <div style="background:#2196F318;border:1.5px solid #2196F344;border-radius:10px;padding:8px 16px;font-family:'Barlow Condensed',sans-serif;font-size:14px;color:#2196F3;letter-spacing:1px">🔔 Countdown beeps</div>
+    </div>
+    <div style="background:#FFD70012;border:1.5px solid #FFD70033;border-radius:10px;padding:9px 18px;margin-bottom:18px;font-family:'Barlow Condensed',sans-serif;font-size:14px;color:#FFD700;letter-spacing:1px">🔊 Turn volume UP before tapping!</div>
+    <button class="btn" onclick="startWorkout()" style="background:linear-gradient(135deg,#FF6B35,#FFD700);border-radius:18px;padding:18px 62px;font-size:34px;box-shadow:0 0 50px #FF6B3566,0 10px 30px #00000066;color:white;letter-spacing:4px">LET'S GO! 🚀</button>
+    <div style="margin-top:13px;font-family:'Barlow Condensed',sans-serif;font-size:12px;opacity:0.35;letter-spacing:2px">21 EXERCISES · AI VOICE BY ELEVENLABS · REAL ROCK MUSIC</div>
+  </div>
+</div>
+<div id="workout" class="screen" style="flex-direction:column;position:relative;overflow:hidden">
+  <div id="blob1" class="blob" style="width:400px;height:400px;top:-100px;left:-100px;animation:blob 6s ease-in-out infinite"></div>
+  <div id="blob2" class="blob" style="width:300px;height:300px;bottom:-80px;right:-80px;animation:blob 8s ease-in-out infinite reverse"></div>
+  <div style="position:relative;z-index:10;padding:11px 16px 0">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:3px">
+      <div id="partLabel" style="padding:3px 11px;border-radius:20px;font-size:11px;font-family:'Barlow Condensed',sans-serif;font-weight:900;letter-spacing:2px;text-transform:uppercase"></div>
+      <div style="display:flex;align-items:center;gap:6px">
+        <button id="musicBtn" class="ctrl-btn" onclick="toggleMusic()">🎸 MUSIC</button>
+        <button id="voiceBtn" class="ctrl-btn" onclick="toggleVoice()">🎙️ VOICE</button>
+        <div id="stepCounter" style="font-family:'Barlow Condensed',sans-serif;font-size:13px;opacity:0.65"></div>
+      </div>
+    </div>
+    <div id="musicViz"></div>
+    <div style="background:#ffffff22;border-radius:6px;height:5px"><div id="progressBar" style="height:5px;border-radius:6px;transition:width 0.5s ease;width:0%"></div></div>
+  </div>
+  <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:12px 20px;position:relative;z-index:5;text-align:center">
+    <div id="exerciseEmoji" style="font-size:68px;line-height:1.1;margin-bottom:5px">🏃</div>
+    <h1 id="exerciseName" style="font-size:clamp(26px,7vw,50px);letter-spacing:3px;text-align:center;margin:0 0 3px;line-height:1"></h1>
+    <div id="setsRow" style="display:none;flex-direction:column;align-items:center;margin-bottom:5px;margin-top:3px">
+      <div id="setsDots" style="display:flex;gap:7px;margin-bottom:4px"></div>
+      <div id="setsLabel" style="font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:700;opacity:0.8;letter-spacing:2px"></div>
+    </div>
+    <div id="restBadge" style="display:none;background:#ffffff22;border:2px solid #ffffff44;border-radius:10px;padding:5px 16px;margin-bottom:7px;font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:900;letter-spacing:3px;color:#FFD700">💧 REST TIME</div>
+    <div id="speakingIndicator" class="speaking-indicator" style="margin-bottom:5px"><div class="speaking-dot"></div><span>COACH IS TALKING…</span></div>
+    <div id="timerWrap" style="display:none;position:relative;width:144px;height:144px;margin:6px 0">
+      <svg width="144" height="144" style="position:absolute;top:0;left:0;transform:rotate(-90deg)">
+        <circle cx="72" cy="72" r="62" fill="none" stroke="#ffffff15" stroke-width="10"/>
+        <circle id="timerArc" cx="72" cy="72" r="62" fill="none" stroke-width="10" stroke-linecap="round" stroke-dasharray="389.56" stroke-dashoffset="0" style="transition:stroke-dashoffset 1s linear"/>
+      </svg>
+      <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center">
+        <div id="timerNum" style="font-size:44px;font-family:'Bebas Neue',sans-serif;line-height:1;transition:font-size 0.2s,color 0.2s">0</div>
+        <div style="font-size:10px;opacity:0.55;font-family:'Barlow Condensed',sans-serif;letter-spacing:2px">SEC</div>
+      </div>
+    </div>
+    <div id="repsWrap" style="display:none;background:#ffffff15;border-radius:13px;padding:11px 32px;margin:7px 0">
+      <div id="repsNum" style="font-size:56px;font-family:'Bebas Neue',sans-serif;line-height:1">10</div>
+      <div style="font-family:'Barlow Condensed',sans-serif;font-size:16px;letter-spacing:3px;opacity:0.75">REPS</div>
+    </div>
+    <div id="coachCue" style="background:#ffffff0d;border:1px solid #ffffff15;border-radius:11px;padding:9px 15px;max-width:345px;font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;line-height:1.4;margin:6px 0;color:#ffffffcc"></div>
+    <div id="motivTicker" style="font-family:'Bebas Neue',sans-serif;font-size:15px;letter-spacing:3px;margin:3px 0;animation:ticker 4s ease-in-out infinite">YOU'RE CRUSHING IT! 🔥</div>
+    <div style="display:flex;gap:10px;margin-top:10px;flex-wrap:wrap;justify-content:center">
+      <button id="startTimerBtn" class="btn" onclick="startTimer()" style="display:none;border-radius:50%;width:74px;height:74px;font-size:24px;color:white">▶</button>
+      <button id="pauseBtn" class="btn" onclick="pauseTimer()" style="display:none;background:#ffffff22;border:2px solid #ffffff44;border-radius:50%;width:64px;height:64px;font-size:20px;color:white">⏸</button>
+      <button id="startSetBtn" class="btn" onclick="startSet()" style="display:none;border-radius:13px;padding:13px 40px;font-size:23px;color:white;letter-spacing:3px">START SET</button>
+      <button id="doneBtn" class="btn" onclick="repsDone()" style="display:none;background:linear-gradient(135deg,#00BFA5,#69F0AE);border-radius:13px;padding:13px 40px;font-size:23px;color:white;letter-spacing:3px;box-shadow:0 0 25px #69F0AE44">DONE! ✅</button>
+      <button id="skipRestBtn" class="btn" onclick="advanceStep()" style="display:none;background:#ffffff15;border:2px solid #ffffff33;border-radius:11px;padding:9px 24px;font-size:14px;color:white;font-family:'Barlow Condensed',sans-serif;font-weight:700;letter-spacing:2px">SKIP REST →</button>
+    </div>
+    <button onclick="advanceStep()" style="background:transparent;border:none;color:#ffffff33;font-family:'Barlow Condensed',sans-serif;font-size:12px;cursor:pointer;margin-top:9px;letter-spacing:1px;text-decoration:underline">skip exercise →</button>
+  </div>
+</div>
+<div id="done" class="screen" style="align-items:center;justify-content:center;text-align:center;padding:28px 22px;position:relative;overflow:hidden;background:linear-gradient(160deg,#003322,#0a0a1a 50%,#1a2200)">
+  <div id="starsContainer"></div>
+  <div style="position:relative;z-index:5;animation:fadeUp 0.7s ease">
+    <div style="font-size:92px;margin-bottom:10px">🏆</div>
+    <h1 style="font-size:clamp(48px,13vw,92px);letter-spacing:4px;line-height:0.9;text-shadow:0 0 50px #FFD70088;color:#FFD700;margin:0 0 14px">WORKOUT<br>COMPLETE!</h1>
+    <div style="background:#ffffff0d;border:1px solid #69F0AE33;border-radius:14px;padding:16px 22px;font-family:'Barlow Condensed',sans-serif;font-size:17px;line-height:1.7;max-width:385px;margin:0 auto 22px;color:#ffffffcc">🎙️ <strong>Awesome work today.</strong> You just trained like a real athlete.<br><br>The more you do this, the faster you'll <span style="color:#69F0AE">skate, run, hit, and shoot</span>.<br><br>Now hydrate 💧, eat good food 🥗, and recover strong! 💪</div>
+    <div style="display:flex;gap:8px;justify-content:center;margin-bottom:20px;flex-wrap:wrap">
+      <span style="background:#69F0AE22;border:1.5px solid #69F0AE44;border-radius:20px;padding:5px 12px;font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:900;color:#69F0AE">FASTER SKATER ⛸️</span>
+      <span style="background:#69F0AE22;border:1.5px solid #69F0AE44;border-radius:20px;padding:5px 12px;font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:900;color:#69F0AE">STRONGER HITTER ⚾</span>
+      <span style="background:#69F0AE22;border:1.5px solid #69F0AE44;border-radius:20px;padding:5px 12px;font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:900;color:#69F0AE">BIGGER SHOT 🏒</span>
+      <span style="background:#69F0AE22;border:1.5px solid #69F0AE44;border-radius:20px;padding:5px 12px;font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:900;color:#69F0AE">EXPLOSIVE SPEED ⚡</span>
+    </div>
+    <button class="btn" onclick="restartWorkout()" style="background:linear-gradient(135deg,#00BFA5,#69F0AE);border-radius:14px;padding:15px 52px;font-size:28px;box-shadow:0 0 38px #69F0AE44;color:#003322;letter-spacing:3px">DO IT AGAIN! 🔄</button>
+  </div>
+</div>
+<audio id="musicTrack" loop style="display:none">
+  <source src="https://files.freemusicarchive.org/storage-freemusicarchive-org/music/no_curator/holiznacc0/Rock_Montage/holiznacc0_-_Punk.mp3" type="audio/mpeg">
+</audio>
+<script>
+const ELEVENLABS_API_KEY='sk_6c0ee2a00e33882c255088a57eb0c22ddbdf5c2af31d77e4';
+const VOICE_ID='TxGEqnHWrfWFTfGW9XjX';
+const workout=[
+  {part:"WARM UP",partNum:1,label:"Easy Jog in Place",duration:60,type:"timed",emoji:"🏃",cue:"Light jog, nice and easy. Pump your arms, stay light on your feet!",rest:0,voice:"Alright, easy jog. Nice and easy, get those arms pumping."},
+  {part:"WARM UP",partNum:1,label:"High Knees",duration:30,type:"timed",emoji:"🦵",cue:"Bring those knees UP! Pump those arms!",rest:10,sets:2,voice:"High knees! Drive those knees up, let's go."},
+  {part:"WARM UP",partNum:1,label:"Butt Kicks",duration:30,type:"timed",emoji:"👟",cue:"Kick your heels to your butt! Go go go!",rest:10,sets:2,voice:"Butt kicks! Kick those heels up, nice work."},
+  {part:"WARM UP",partNum:1,label:"Arm Circles Forward",duration:20,type:"timed",emoji:"💪",cue:"Big circles forward — loosen up those throwing shoulders!",rest:0,voice:"Arm circles forward. Big ones, loosen up those shoulders."},
+  {part:"WARM UP",partNum:1,label:"Arm Circles Backward",duration:20,type:"timed",emoji:"💪",cue:"Now backwards! Loosen up for shooting and throwing!",rest:0,voice:"Now backwards. This is for your shot and your throw."},
+  {part:"WARM UP",partNum:1,label:"Torso Twists",duration:30,type:"timed",emoji:"🔄",cue:"Twist left… right… pretend you're swinging a bat!",rest:0,voice:"Torso twists. Left and right, like you're swinging a bat."},
+  {part:"WARM UP",partNum:1,label:"Bodyweight Squats",type:"reps",reps:10,emoji:"🏋️",cue:"Feet shoulder width, sit back like a chair, stand tall. 10 reps!",rest:0,voice:"Ten bodyweight squats. Feet shoulder width, sit back, stand tall."},
+  {part:"WARM UP",partNum:1,label:"Pushups",type:"reps",reps:8,emoji:"🤜",cue:"Knees or full — your choice. 8 strong reps!",rest:0,voice:"Eight pushups. Knees or full, your call. Make them count."},
+  {part:"WARM UP",partNum:1,label:"Plank",duration:30,type:"timed",emoji:"🧱",cue:"Body straight like a board! Don't let those hips sag!",rest:30,voice:"Plank. Body straight like a board, don't let those hips drop."},
+  {part:"POWER & LEGS",partNum:2,label:"Squats",type:"reps",reps:10,sets:3,emoji:"🦵",cue:"Chest up, knees over toes, sit back! Strong legs = faster skating!",rest:30,voice:"Squats. Ten reps, chest up, sit back. Strong legs make you a faster skater."},
+  {part:"POWER & LEGS",partNum:2,label:"Jump Squats",type:"reps",reps:6,sets:3,emoji:"🚀",cue:"Squat down… EXPLODE like a rocket! Land softly!",rest:45,voice:"Jump squats. Squat down, explode up like a rocket. Land soft."},
+  {part:"POWER & LEGS",partNum:2,label:"Skater Jumps",type:"reps",reps:8,sets:3,emoji:"⛸️",cue:"Jump side to side, land on one leg — pretend you're SKATING!",rest:30,voice:"Skater jumps. Side to side, land on one leg. Pretend you're on the ice."},
+  {part:"CORE & UPPER BODY",partNum:3,label:"Pushups",type:"reps",reps:10,sets:3,emoji:"🏒",cue:"Strong arms like a hockey defenseman! 10 reps, perfect form!",rest:30,voice:"Pushups. Ten reps. Strong arms like a hockey defenseman."},
+  {part:"CORE & UPPER BODY",partNum:3,label:"Superman Hold",duration:20,type:"timed",sets:3,emoji:"🦸",cue:"Lie on your stomach, lift arms AND legs — FLY like Superman!",rest:15,voice:"Superman hold. Lie on your stomach, lift your arms and legs, and fly."},
+  {part:"CORE & UPPER BODY",partNum:3,label:"Plank",duration:30,type:"timed",sets:3,emoji:"🧱",cue:"Don't let your hips drop! Hold it strong!",rest:15,voice:"Plank. Hold it, stay strong, don't let those hips drop."},
+  {part:"SPEED & AGILITY",partNum:4,label:"Quick Feet",duration:20,type:"timed",sets:5,emoji:"⚡",cue:"Run in place AS FAST AS YOU CAN! FAST FEET!",rest:10,voice:"Quick feet. Run in place as fast as you can. Let's go!"},
+  {part:"SPEED & AGILITY",partNum:4,label:"Sprint Drill",type:"reps",reps:5,emoji:"💨",cue:"Sprint 20 yards, walk back. Drive your arms and GO!",rest:0,voice:"Sprint drill. Five sprints, twenty yards each. Drive those arms and go."},
+  {part:"SPEED & AGILITY",partNum:4,label:"Reaction Ball Drill",type:"reps",reps:10,emoji:"🎾",cue:"Parent drops tennis ball — sprint and catch before second bounce!",rest:0,voice:"Reaction drill. Parent drops the ball, you sprint and catch it before it bounces twice. Be quick."},
+  {part:"COOL DOWN",partNum:5,label:"Standing Quad Stretch",duration:40,type:"timed",emoji:"🧘",cue:"Hold each leg 20 seconds. Balance tall like an athlete!",rest:0,voice:"Quad stretch. Hold each leg for twenty seconds. Breathe deep, you earned this."},
+  {part:"COOL DOWN",partNum:5,label:"Hamstring Stretch",duration:20,type:"timed",emoji:"🙆",cue:"Reach for those toes! Nice and slow.",rest:0,voice:"Hamstring stretch. Reach for your toes, slow and steady."},
+  {part:"COOL DOWN",partNum:5,label:"Shoulder Stretch",duration:40,type:"timed",emoji:"🤗",cue:"Arm across your chest. 20 seconds each arm!",rest:0,voice:"Last one, shoulder stretch. Arm across your chest, twenty seconds each side. You crushed it today."},
+];
+const partColors={1:{bg:"#FF6B35",accent:"#FFD700"},2:{bg:"#E63946",accent:"#FF6B35"},3:{bg:"#2196F3",accent:"#00E5FF"},4:{bg:"#7C4DFF",accent:"#E040FB"},5:{bg:"#00BFA5",accent:"#69F0AE"}};
+const motivational=["YOU'RE CRUSHING IT! 🔥","BEAST MODE ACTIVATED! 💪","REAL ATHLETES PUSH THROUGH! ⚡","SKATE FASTER, RUN HARDER! ⛸️","THAT'S HOW CHAMPS TRAIN! 🏆","DON'T STOP NOW! 🚀","STRONGER EVERY REP! 💥","FUTURE MVP RIGHT HERE! ⚾"];
+let stepIndex=0,setNum=1,phase="work",timeLeft=0,running=false;
+let timerInterval=null,motivInterval=null,motivIdx=0;
+let musicOn=true,voiceOn=true,vizInterval=null,audioCtx=null;
+let speechQueue=[],isSpeaking=false;
+const audioCache={};
+function getACtx(){if(!audioCtx)audioCtx=new(window.AudioContext||window.webkitAudioContext)();return audioCtx;}
+function resumeACtx(){const c=getACtx();if(c.state==='suspended')c.resume();}
+function playTone(freq,dur,vol,type,delay){delay=delay||0;type=type||'sine';vol=vol||0.35;const c=getACtx();const o=c.createOscillator(),g=c.createGain();o.connect(g);g.connect(c.destination);o.type=type;o.frequency.setValueAtTime(freq,c.currentTime+delay);g.gain.setValueAtTime(0,c.currentTime+delay);g.gain.linearRampToValueAtTime(vol,c.currentTime+delay+0.01);g.gain.exponentialRampToValueAtTime(0.001,c.currentTime+delay+dur);o.start(c.currentTime+delay);o.stop(c.currentTime+delay+dur+0.05);}
+function playTickBeep(isLast){playTone(isLast?1100:880,0.07,isLast?0.42:0.26,'sine');}
+function playGoSound(){playTone(880,0.07,0.4,'sine',0);playTone(1100,0.16,0.45,'sine',0.08);}
+function playBuzzer(){playTone(523,0.08,0.38,'square',0);playTone(659,0.08,0.38,'square',0.1);playTone(784,0.2,0.45,'square',0.2);}
+function playRestSound(){playTone(440,0.1,0.3,'sawtooth',0);playTone(330,0.22,0.22,'sawtooth',0.13);}
+function playVictory(){[0,0.15,0.3,0.48,0.65,0.82].forEach((d,i)=>{const freqs=[523,659,784,1047,784,1047];playTone(freqs[i],i<5?0.1:0.5,i<5?0.35:0.55,'sine',d);});}
+const music=document.getElementById('musicTrack');
+music.volume=0.35;
+function startMusic(){if(!musicOn)return;music.play().catch(()=>{});animateViz(partColors[workout[stepIndex].partNum].accent);}
+function stopMusic(){music.pause();music.currentTime=0;stopViz();}
+function toggleMusic(){musicOn=!musicOn;const btn=document.getElementById('musicBtn');if(musicOn){btn.classList.remove('off');btn.textContent='🎸 MUSIC';startMusic();}else{btn.classList.add('off');btn.textContent='🎸 OFF';music.pause();}}
+function animateViz(color){const viz=document.getElementById('musicViz');if(!viz)return;viz.innerHTML='';for(let i=0;i<18;i++){const b=document.createElement('div');b.className='bar';b.style.background=color||'#FFD700';viz.appendChild(b);}clearInterval(vizInterval);vizInterval=setInterval(()=>{if(!musicOn){viz.querySelectorAll('.bar').forEach(b=>b.style.height='2px');return;}viz.querySelectorAll('.bar').forEach(b=>{b.style.height=(Math.floor(Math.random()*20)+2)+'px';});},110);}
+function stopViz(){clearInterval(vizInterval);const v=document.getElementById('musicViz');if(v)v.querySelectorAll('.bar').forEach(b=>b.style.height='2px');}
+async function fetchVoice(text){if(audioCache[text])return audioCache[text];try{const res=await fetch(`https://api.elevenlabs.io/v1/text-to-speech/${VOICE_ID}`,{method:'POST',headers:{'xi-api-key':ELEVENLABS_API_KEY,'Content-Type':'application/json','Accept':'audio/mpeg'},body:JSON.stringify({text,model_id:'eleven_turbo_v2',voice_settings:{stability:0.45,similarity_boost:0.8,style:0.35,use_speaker_boost:true}})});if(!res.ok)throw new Error('API error '+res.status);const blob=await res.blob();const url=URL.createObjectURL(blob);audioCache[text]=url;return url;}catch(e){console.warn('Voice fetch failed:',e);return null;}}
+function speak(text){if(!voiceOn)return;speechQueue.push(text);if(!isSpeaking)processSpeechQueue();}
+async function processSpeechQueue(){if(speechQueue.length===0){isSpeaking=false;hideSpeakingIndicator();return;}isSpeaking=true;const text=speechQueue.shift();showSpeakingIndicator();const url=await fetchVoice(text);if(!url){hideSpeakingIndicator();processSpeechQueue();return;}const a=new Audio(url);a.volume=1.0;a.onended=()=>{hideSpeakingIndicator();setTimeout(()=>processSpeechQueue(),120);};a.onerror=()=>{hideSpeakingIndicator();processSpeechQueue();};a.play().catch(()=>{hideSpeakingIndicator();processSpeechQueue();});}
+function clearSpeech(){speechQueue=[];isSpeaking=false;hideSpeakingIndicator();}
+function showSpeakingIndicator(){const el=document.getElementById('speakingIndicator');if(el)el.style.display='flex';}
+function hideSpeakingIndicator(){const el=document.getElementById('speakingIndicator');if(el)el.style.display='none';}
+function toggleVoice(){voiceOn=!voiceOn;const btn=document.getElementById('voiceBtn');if(voiceOn){btn.classList.remove('off');btn.textContent='🎙️ VOICE';}else{btn.classList.add('off');btn.textContent='🎙️ OFF';clearSpeech();}}
+function preFetchVoices(){const lines=[];workout.forEach(s=>{if(s.voice)lines.push(s.voice);});["Rest up. Catch your breath and get ready for the next set.","Get ready, next set coming up!","Three!","Two!","One!","Go! Let's get it.","Nice work! Keep it up.","That's a set! Looking good.","Incredible work today. You just trained like a real athlete. Go hydrate, eat good food, and come back even stronger."].forEach(l=>lines.push(l));lines.forEach(l=>fetchVoice(l).catch(()=>{}));}
+function flashScreen(color){const o=document.getElementById('flashOverlay');o.style.background=color;o.style.animation='none';o.offsetHeight;o.style.animation='flash 0.5s ease forwards';}
+function showScreen(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');}
+function startWorkout(){resumeACtx();stepIndex=0;setNum=1;phase="work";showScreen('workout');startMotivTicker();startMusic();preFetchVoices();setTimeout(()=>speak("Let's go. Time to train like a real athlete."),400);renderStep();}
+function restartWorkout(){stopMusic();clearInterval(motivInterval);clearSpeech();startWorkout();}
+function startMotivTicker(){clearInterval(motivInterval);motivInterval=setInterval(()=>{motivIdx=(motivIdx+1)%motivational.length;const el=document.getElementById('motivTicker');if(el)el.textContent=motivational[motivIdx];},4200);}
+function renderStep(){clearInterval(timerInterval);running=false;clearSpeech();const step=workout[stepIndex];const color=partColors[step.partNum];const totalSets=step.sets||1;animateViz(color.accent);document.getElementById('blob1').style.background=`radial-gradient(circle,${color.bg}44,transparent 70%)`;document.getElementById('blob2').style.background=`radial-gradient(circle,${color.accent}33,transparent 70%)`;const pl=document.getElementById('partLabel');pl.textContent=`PART ${step.partNum}: ${step.part}`;pl.style.background=color.bg;document.getElementById('stepCounter').textContent=`${stepIndex+1} / ${workout.length}`;const pb=document.getElementById('progressBar');pb.style.width=`${(stepIndex/workout.length)*100}%`;pb.style.background=`linear-gradient(90deg,${color.bg},${color.accent})`;pb.style.boxShadow=`0 0 10px ${color.accent}88`;const emoji=document.getElementById('exerciseEmoji');emoji.textContent=step.emoji;emoji.style.filter=`drop-shadow(0 0 18px ${color.accent}88)`;emoji.style.animation='none';const nameEl=document.getElementById('exerciseName');nameEl.textContent=step.label;nameEl.style.textShadow=`0 0 26px ${color.accent}88`;const setsRow=document.getElementById('setsRow');if(totalSets>1&&phase==='work'){setsRow.style.display='flex';const dots=document.getElementById('setsDots');dots.innerHTML='';for(let i=0;i<totalSets;i++){const d=document.createElement('div');d.style.cssText=`width:24px;height:7px;border-radius:4px;background:${i<setNum?color.accent:'#ffffff33'};transition:background 0.3s;${i<setNum?`box-shadow:0 0 6px ${color.accent}`:''}`;dots.appendChild(d);}document.getElementById('setsLabel').textContent=`SET ${setNum} OF ${totalSets}`;}else{setsRow.style.display='none';}document.getElementById('restBadge').style.display=phase==='rest'?'block':'none';document.getElementById('motivTicker').style.color=color.accent;document.getElementById('motivTicker').style.textShadow=`0 0 10px ${color.accent}88`;document.getElementById('coachCue').textContent=`🎙️ ${step.cue}`;['startTimerBtn','pauseBtn','startSetBtn','doneBtn','skipRestBtn'].forEach(id=>{document.getElementById(id).style.display='none';});if(phase==='rest'){document.getElementById('timerWrap').style.display='block';document.getElementById('repsWrap').style.display='none';document.getElementById('skipRestBtn').style.display='inline-block';const rt=step.rest||0;timeLeft=rt;updateTimerUI(color,rt);playRestSound();setTimeout(()=>speak("Rest up. Catch your breath and get ready for the next set."),300);doCountdown(rt,color,()=>{playGoSound();speak("Get ready, next set coming up!");setTimeout(()=>nextAfterRest(),900);});}else if(step.type==='timed'){document.getElementById('timerWrap').style.display='block';document.getElementById('repsWrap').style.display='none';timeLeft=step.duration;updateTimerUI(color,step.duration);const btn=document.getElementById('startTimerBtn');btn.style.display='inline-block';btn.style.background=`linear-gradient(135deg,${color.bg},${color.accent})`;btn.style.boxShadow=`0 0 26px ${color.accent}88`;setTimeout(()=>speak(step.voice||step.label),280);}else{document.getElementById('timerWrap').style.display='none';document.getElementById('repsWrap').style.display='block';document.getElementById('repsNum').textContent=step.reps;document.getElementById('repsNum').style.color=color.accent;document.getElementById('repsNum').style.textShadow=`0 0 16px ${color.accent}`;document.getElementById('repsWrap').style.border=`2px solid ${color.accent}44`;const sb=document.getElementById('startSetBtn');sb.style.display='inline-block';sb.style.background=`linear-gradient(135deg,${color.bg},${color.accent})`;sb.style.boxShadow=`0 0 26px ${color.accent}44`;setTimeout(()=>speak(step.voice||step.label),280);}}
+function updateTimerUI(color,fullTotal){const step=workout[stepIndex];const total=fullTotal||(phase==='rest'?step.rest:step.duration)||1;const arc=document.getElementById('timerArc');const num=document.getElementById('timerNum');const circ=2*Math.PI*62;arc.style.strokeDashoffset=`${circ*(timeLeft/total)}`;const c=phase==='rest'?'#FFD700':(partColors[step.partNum]?.accent||'#fff');arc.style.stroke=c;arc.style.filter=`drop-shadow(0 0 6px ${c})`;num.textContent=timeLeft;num.style.color=timeLeft<=3?'#FF4444':'white';num.style.textShadow=timeLeft<=3?'0 0 16px #FF4444':'none';num.style.fontSize=timeLeft<=3?'52px':'44px';}
+function doCountdown(secs,color,onDone){clearInterval(timerInterval);running=true;const full=secs;timeLeft=secs;updateTimerUI(color,full);timerInterval=setInterval(()=>{timeLeft--;updateTimerUI(color,full);if(timeLeft===3){playTickBeep(false);speak("Three!");}else if(timeLeft===2){playTickBeep(false);speak("Two!");}else if(timeLeft===1){playTickBeep(true);speak("One!");}if(timeLeft<=0){clearInterval(timerInterval);running=false;onDone();}},1000);}
+function startTimer(){const step=workout[stepIndex];const color=partColors[step.partNum];document.getElementById('startTimerBtn').style.display='none';document.getElementById('pauseBtn').style.display='inline-block';document.getElementById('exerciseEmoji').style.animation='pulse 0.9s ease-in-out infinite';speak("Go! Let's get it.");playGoSound();flashScreen(color.accent+'44');doCountdown(timeLeft,color,()=>{playBuzzer();flashScreen('#FFD70077');document.getElementById('exerciseEmoji').style.animation='none';speak("Nice work! Keep it up.");handleWorkDone();});}
+function pauseTimer(){clearInterval(timerInterval);running=false;document.getElementById('pauseBtn').style.display='none';document.getElementById('startTimerBtn').style.display='inline-block';document.getElementById('exerciseEmoji').style.animation='none';}
+function startSet(){const step=workout[stepIndex];document.getElementById('startSetBtn').style.display='none';document.getElementById('doneBtn').style.display='inline-block';speak("Go! Let's get it.");playGoSound();flashScreen(partColors[step.partNum].accent+'44');document.getElementById('exerciseEmoji').style.animation='pulse 0.5s ease-in-out infinite';}
+function repsDone(){document.getElementById('doneBtn').style.display='none';document.getElementById('exerciseEmoji').style.animation='none';playBuzzer();flashScreen('#FFD70066');speak("That's a set! Looking good.");handleWorkDone();}
+function handleWorkDone(){const step=workout[stepIndex];const totalSets=step.sets||1;if(setNum<totalSets){setNum++;if(step.rest>0){phase='rest';}else{phase='work';}renderStep();}else{if(step.rest>0){phase='rest';renderStep();}else{advanceStep();}}}
+function nextAfterRest(){if(stepIndex+1>=workout.length){finishWorkout();return;}stepIndex++;setNum=1;phase='work';renderStep();}
+function advanceStep(){clearInterval(timerInterval);clearSpeech();if(stepIndex+1>=workout.length){finishWorkout();return;}stepIndex++;setNum=1;phase='work';renderStep();}
+function finishWorkout(){clearInterval(timerInterval);stopMusic();clearInterval(motivInterval);clearSpeech();showScreen('done');spawnStars();setTimeout(()=>playVictory(),300);setTimeout(()=>speak("Incredible work today. You just trained like a real athlete. Go hydrate, eat good food, and come back even stronger."),1400);}
+function spawnStars(){const emojis=["⭐","🏆","🔥","💪","⚡","🎯","🚀","⚾"];const c=document.getElementById('starsContainer');c.innerHTML='';emojis.forEach((e,i)=>{const d=document.createElement('div');d.textContent=e;d.style.cssText=`position:fixed;font-size:28px;top:${10+Math.floor(Math.random()*80)}%;left:${5+Math.floor(Math.random()*85)}%;animation:star ${2+i*0.4}s ease-in-out infinite;animation-delay:${i*0.3}s;pointer-events:none;z-index:0`;c.appendChild(d);});}
+</script>
+</body>
+</html>
